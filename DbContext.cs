@@ -12,7 +12,7 @@ namespace geo
             if (!optionsBuilder.IsConfigured)
             {
                 // Specify the connection string for your SQL Server database
-                            string con = "Password=kakemot1;Server=34.140.79.76;Database=messages;";
+                            string con = "User Id=sqlserver;Password=kakemot1;Server=34.140.79.76;Database=messages;";
                 optionsBuilder.UseSqlServer(con);
             }
         }
