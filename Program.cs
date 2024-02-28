@@ -13,8 +13,6 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
-
 app.MapGet("/messages", () =>
 {       Message msg = new Message();
         msg.Username = "bro-bro";
