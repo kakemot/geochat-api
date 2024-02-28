@@ -26,5 +26,14 @@ app.MapGet("/messages", () =>
 .WithName("GetMessages")
 .WithOpenApi();
 
+app.MapPost("/messages", async (Message newMessage) =>
+{
+    DbService dbs = new DbService();
+    await dbs.AddMessage(newMessage);
+    newMessage.Time = DateTime.Now; // Set the time to now, assuming it's not set by the client
+    return Results.Created($"/messages/{newMessage.Id}", newMessage); // Return the created message
+})
+.WithName("PostMessage")
+.WithOpenApi();
 //app.UseHttpsRedirection();
 app.Run();
