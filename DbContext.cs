@@ -12,7 +12,7 @@ namespace geo
             if (!optionsBuilder.IsConfigured)
             {
                 // Specify the connection string for your SQL Server database
-                            string con = "Server=/cloudsql/geochat-415222:europe-west1:geochatdb;Database=geochatdb;User Id=sqlserver;Password=kakemot1;";
+                            string con = "Server=127.0.0.1;Database=geochatdb;User Id=sqlserver;Password=kakemot1;";
                 optionsBuilder.UseSqlServer(con);
             }
         }
