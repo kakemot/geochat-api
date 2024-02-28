@@ -3,7 +3,7 @@ using System;
 
 namespace geo
 {
-    public class YourDbContext : DbContext
+    public class MyDbContext : DbContext
     {
         public DbSet<Message> Messages { get; set; }
 
