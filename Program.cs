@@ -19,6 +19,24 @@ app.MapGet("/messages", async () =>
 .WithName("GetMessages")
 .WithOpenApi();
 
+app.MapGet("/messages", async (string city) =>
+{       
+    DbService dbs = new DbService();
+    List<Message> messages = await dbs.GetMessagesByCity(city); // Assuming you'll implement this method
+    return messages;
+})
+.WithName("GetMessagesByCity")
+.WithOpenApi();
+
+app.MapGet("/hasNewMessages", async (DateTime lastChecked, string city) =>
+{
+    DbService dbs = new DbService();
+    bool hasNewMessages = await dbs.HasNewMessagesSince(lastChecked, city);
+    return hasNewMessages;
+})
+.WithName("HasNewMessages")
+.WithOpenApi();
+
 app.MapPost("/messages", async (Message newMessage) =>
 {
     DbService dbs = new DbService();
