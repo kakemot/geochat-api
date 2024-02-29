@@ -10,17 +10,10 @@ var app = builder.Build();
     app.UseSwagger();
     app.UseSwaggerUI();
 
-app.MapGet("/messages", () =>
+app.MapGet("/messages", async () =>
 {       
         DbService dbs = new DbService();
-        Message msg = new Message();
-        msg.Username = "bro-bro";
-        msg.City = "Trondheim";
-        msg.Locality = "Tiller";
-        msg.Content = "Dette funker såååå bra da";
-        msg.Time = DateTime.Now;
-        List<Message> messages = new List<Message>();
-        messages.Add(msg);
+        List<Message> messages = await dbs.GetMessages();
     return messages;
 })
 .WithName("GetMessages")
