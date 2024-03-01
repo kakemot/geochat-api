@@ -5,12 +5,26 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(
+        builder =>
+        {
+            builder.AllowAnyOrigin()
+                   .AllowAnyHeader()
+                   .AllowAnyMethod();
+        });
+});
+
 var app = builder.Build();
 
     app.UseSwagger();
     app.UseSwaggerUI();
 
-app.MapGet("/messages", async () =>
+
+
+app.MapGet("/allmessages", async () =>
 {       
         DbService dbs = new DbService();
         List<Message> messages = await dbs.GetMessages();
@@ -19,10 +33,10 @@ app.MapGet("/messages", async () =>
 .WithName("GetMessages")
 .WithOpenApi();
 
-app.MapGet("/messages", async (string city) =>
+app.MapGet("/messages", async (DateTime lastChecked, string city) =>
 {       
     DbService dbs = new DbService();
-    List<Message> messages = await dbs.GetMessagesByCity(city); // Assuming you'll implement this method
+    List<Message> messages = await dbs.GetMessagesByCity(lastChecked, city); // Assuming you'll implement this method
     return messages;
 })
 .WithName("GetMessagesByCity")
@@ -47,4 +61,5 @@ app.MapPost("/messages", async (Message newMessage) =>
 .WithName("PostMessage")
 .WithOpenApi();
 //app.UseHttpsRedirection();
+app.UseCors();
 app.Run();

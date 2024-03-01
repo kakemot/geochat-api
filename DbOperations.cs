@@ -24,11 +24,11 @@ namespace geo
             bool hasNewMessages = dbContext.Messages.Any(x => x.Time > lastChecked && x.City == city);
             return hasNewMessages;
         }
-        public async Task<List<Message>> GetMessagesByCity(string city)
+        public async Task<List<Message>> GetMessagesByCity(DateTime lastChecked, string city)
         {
             await using var dbContext = new MyDbContext();
             dbContext.Database.EnsureCreated();
-            List<Message> messages = dbContext.Messages.Where(x=>x.City == city).ToList();
+            List<Message> messages = dbContext.Messages.Where(x => x.Time > lastChecked && x.City == city).ToList();
             return messages;
         }
     }
